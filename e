@@ -48,3 +48,47 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+local sw2 = GetPartFromPort(2, "Switch")
+local P1 = GetPort(1)
+local P3 = GetPort(3)
+local thr = GetPartFromPort(1, "Thruster")
+local thrust = 0
+
+thr:Configure({ Propulsion = 0 })
+sw2:Configure({ SwitchValue = false })
+
+P1:Connect("Triggered", function()
+if thrust <= 90 then
+thrust = thrust + 10
+print(thrust)
+thr:Configure({ Propulsion = thrust })
+sw2:Configure({ SwitchValue = true })
+end
+end)
+
+P3:Connect("Triggered", function()
+print("down")
+if thrust > 10 then
+thrust = thrust - 10
+print(thrust)
+thr:Configure({ Propulsion = thrust })
+sw2:Configure({ SwitchValue = true })
+elseif thrust == 10 then
+sw2:Configure({ SwitchValue = false })
+repeat
+wait()
+until sw2:Configured()
+thrust = 0
+print(thrust)
+thr:Configure({ Propulsion = thrust })
+end
+end)
