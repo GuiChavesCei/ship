@@ -91,9 +91,52 @@ local con1 = GetPartFromPort(1, "Container")
 local con2 = GetPartFromPort(2, "Container")
 local sign = GetPartFromPort(3, "Sign")
 
-local WP = ( con1:GetAmount() + con2:GetAmount() ) / 200 
+local WP = ( con1:GetAmount() + con2:GetAmount() ) / 200
+local UP = ( bin1:GetAmount() + bin2:GetAmount() ) / 20
 
 while true do
 wait()
 sign:Configure({ SignText = "Water: " .. WP .. "% \nUranium: " .. UP .. "% " })
 end
+
+
+
+local bin1 = GetPartFromPort(1, "Bin")
+local bin2 = GetPartFromPort(2, "Bin")
+local bin3 = GetPartFromPort(3, "Bin")
+local bin4 = GetPartFromPort(4, "Bin")
+local sign = GetPartFromPort(5, "Sign")
+
+local IP = ( bin1:GetAmount() + bin2:GetAmount() + bin3:GetAmount() + bin4:GetAmount() ) / 40 
+
+while true do
+wait()
+sign:Configure({ SignText = "Ice: " .. IP .. "% " })
+end
+
+
+
+local port = GetPartFromPort(1, "Port")
+local KB = GetPartFromPort(1, "Keyboard")
+
+KB:Connect("TextInputted", function(text)
+if text == "Uranium" or text == "uranium" then
+port:Configure({ PortID = 4 })
+local switch = GetPartFromPort(4, "Switch")
+switch:Trigger()
+elseif text == "Ice" or text == "ice" then
+port:Configure({ PortID = 2 })
+local switch = GetPartFromPort(2, "Switch")
+switch:Trigger()
+elseif text == "Helium" or text == "helium" then
+port:Configure({ PortID = 3 })
+local switch = GetPartFromPort(3, "Switch")
+switch:Trigger()
+elseif text == "Stop" or text == "stop" then
+for i = 2,4 do
+print(i)
+port:Configure({ PortID = i })
+local switch = GetPartFromPort(i, "Switch")
+switch:Configure({ SwitchValue = false })
+end
+end)
