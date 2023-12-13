@@ -67,28 +67,33 @@ thr:Configure({ Propulsion = 0 })
 sw2:Configure({ SwitchValue = false })
 
 P1:Connect("Triggered", function()
-if thrust <= 90 then
+if thrust <= 90 and thrust ~= 0 then
 thrust = thrust + 10
-print(thrust)
 thr:Configure({ Propulsion = thrust })
+elseif thrust == 0 then
 sw2:Configure({ SwitchValue = true })
+thrust == thrust + 10
 end
 end)
 
 P3:Connect("Triggered", function()
-print("down")
-if thrust > 10 then
-thrust = thrust - 10
-print(thrust)
-thr:Configure({ Propulsion = thrust })
-sw2:Configure({ SwitchValue = true })
-elseif thrust == 10 then
 sw2:Configure({ SwitchValue = false })
-repeat
-wait()
-until sw2:Configured()
+repeat wait() until sw2:Configured()
 thrust = 0
-print(thrust)
-thr:Configure({ Propulsion = thrust })
-end
+thr:Configure({ Propulsion = 10 })
 end)
+
+
+
+local bin1 = GetPartFromPort(1, "Bin")
+local bin2 = GetPartFromPort(2, "Bin")
+local con1 = GetPartFromPort(1, "Container")
+local con2 = GetPartFromPort(2, "Container")
+local sign = GetPartFromPort(3, "Sign")
+
+local WP = ( con1:GetAmount() + con2:GetAmount() ) / 200 
+
+while true do
+wait()
+sign:Configure({ SignText = "Water: " .. WP .. "% \nUranium: " .. UP .. "% " })
+end
