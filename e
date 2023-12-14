@@ -67,20 +67,21 @@ thr:Configure({ Propulsion = 0 })
 sw2:Configure({ SwitchValue = false })
 
 P1:Connect("Triggered", function()
-if thrust <= 90 and thrust ~= 0 then
+if thrust <= 90 and thrust ~= 5 then
+sw2:Configure({ SwitchValue = true })
 thrust = thrust + 10
 thr:Configure({ Propulsion = thrust })
-elseif thrust == 0 then
+elseif thrust == 5 then
 sw2:Configure({ SwitchValue = true })
-thrust == thrust + 10
+thrust = thrust + 5
+thr:Configure({ Propulsion = thrust })
 end
 end)
 
 P3:Connect("Triggered", function()
 sw2:Configure({ SwitchValue = false })
-repeat wait() until sw2:Configured()
-thrust = 0
-thr:Configure({ Propulsion = 10 })
+thrust = 5
+thr:Configure({ Propulsion = thrust })
 end)
 
 
@@ -96,7 +97,7 @@ local UP = ( bin1:GetAmount() + bin2:GetAmount() ) / 20
 
 while true do
 wait()
-sign:Configure({ SignText = "Water: " .. WP .. "% \nUranium: " .. UP .. "% " })
+sign:Configure({ SignText = "Coolant: " .. WP .. "% \nFuel: " .. UP .. "% " })
 end
 
 
@@ -118,25 +119,53 @@ end
 
 local port = GetPartFromPort(1, "Port")
 local KB = GetPartFromPort(1, "Keyboard")
+local switch4 = GetPartFromPort(4, "Switch")
+local switch3 = GetPartFromPort(3, "Switch")
+local switch2 = GetPartFromPort(2, "Switch")
 
 KB:Connect("TextInputted", function(text)
-if text == "Uranium" or text == "uranium" then
-port:Configure({ PortID = 4 })
-local switch = GetPartFromPort(4, "Switch")
-switch:Trigger()
-elseif text == "Ice" or text == "ice" then
-port:Configure({ PortID = 2 })
-local switch = GetPartFromPort(2, "Switch")
-switch:Trigger()
-elseif text == "Helium" or text == "helium" then
-port:Configure({ PortID = 3 })
-local switch = GetPartFromPort(3, "Switch")
-switch:Trigger()
-elseif text == "Stop" or text == "stop" then
-for i = 2,4 do
-print(i)
-port:Configure({ PortID = i })
-local switch = GetPartFromPort(i, "Switch")
-switch:Configure({ SwitchValue = false })
+if text:sub(1, -2) == "Uranium" or text:sub(1, -2) == "uranium" then
+print(text)
+switch4:Configure({ SwitchValue = true })
+elseif text:sub(1, -2) == "Ice" or text:sub(1, -2) == "ice" then
+print(text)
+switch2:Configure({ SwitchValue = true })
+elseif text:sub(1, -2) == "Helium" or text:sub(1, -2) == "helium" then
+print(text)
+switch3:Configure({ SwitchValue = true })
+elseif text:sub(1, -2) == "Stop" or text:sub(1, -2) == "stop" then
+switch4:Configure({ SwitchValue = false })
+switch3:Configure({ SwitchValue = false })
+switch2:Configure({ SwitchValue = false })
 end
+end)
+
+
+
+
+
+
+
+local sw2 = GetPartFromPort(2, "Switch")
+local P1 = GetPort(1)
+local P3 = GetPort(3)
+local thr = GetPartFromPort(1, "Thruster")
+local thrust = 0
+
+thr:Configure({ Propulsion = 0 })
+sw2:Configure({ SwitchValue = false })
+
+P1:Connect("Triggered", function()
+if thrust <= 90 then
+thrust = thrust + 10
+print(thrust)
+thr:Configure({ Propulsion = thrust })
+sw2:Configure({ SwitchValue = true })
+end
+end)
+
+P3:Connect("Triggered", function()
+sw2:Configure({ SwitchValue = false })
+thrust = 10
+thr:Configure({ Propulsion = thrust })
 end)
