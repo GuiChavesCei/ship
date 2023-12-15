@@ -169,3 +169,43 @@ sw2:Configure({ SwitchValue = false })
 thrust = 10
 thr:Configure({ Propulsion = thrust })
 end)
+
+
+
+
+
+local MLs = GetPartsFromPort(2, "MiningLaser")
+local switch = GetPartFromPort(2, "Switch")
+local KB = GetPartFromPort(1, "Keyboard")
+
+KB:Connect("TextInputted", function(text)
+local FL = text:sub(1, 1):upper()
+local RotL = text:sub(2, -2):lower()
+local MTE = FL .. RotL
+if MTE == "Stop" then
+switch:Configure({ SwitchValue = false })
+else
+switch:Configure({ SwitchValue = true })
+for i, ML in MLs do
+ML:Configure({ MaterialToExtract = MTE })
+end
+end
+end)
+
+
+
+
+local KB = GetPartFromPort(1, "Keyboard")
+KB:Connect("TextInputted", function(text)
+
+for i = 1, 5 do
+print(MTE)
+end
+end)
+
+
+
+local MLs = GetPartsFromPort(2, "MiningLaser")
+for i, ML in MLs do
+ML:Configure({ MaterialToExtract = "Copper" })
+end
