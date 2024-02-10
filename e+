@@ -1,0 +1,6 @@
+local Screen = GetPartFromPort(1, "Screen")
+local frame = Screen:CreateElement('Frame', {
+  Position = UDim2.fromScale(0.5, 0.5);
+  Size = UDim2.fromScale(0.5, 0.5);
+  BackgroundColor = BrickColor.new("Pastel Blue");
+})
