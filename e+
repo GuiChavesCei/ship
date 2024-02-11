@@ -1,6 +1,44 @@
 local Screen = GetPartFromPort(1, "Screen")
-local frame = Screen:CreateElement('Frame', {
-  Position = UDim2.fromScale(0.5, 0.5);
-  Size = UDim2.fromScale(0.5, 0.5);
+local Bin = GetPartFromPort(2, "Bin")
+Screen:ClearElements()
+
+local ammoFrame = Screen:CreateElement('Frame', {
+  Position = UDim2.fromScale(0.8, 0.3);
   BackgroundColor = BrickColor.new("Pastel Blue");
 })
+
+local ammoIcon = Screen:CreateElement("ImageLabel", {
+  Position = UDim2.fromScale(0.8, 0.1);
+  Size = UDim2.fromScale(0.1, 0.1);
+})
+
+ammoIcon.Image = "rbxassetid://6011908706" 
+ammoIcon.BackgroundTransparency = 1
+ammoIcon.Rotation = 180
+
+while true do
+  local BA = Bin:GetAmount()/125
+  local Green = math.ceil(BA * 255)
+  local Red = math.ceil(255 - BA * 255)
+  ammoFrame.Size = UDim2.fromScale(0.1, 0.6 * BA)
+  ammoFrame.BackgroundColor3 = Color3.fromRGB(Red, Green, 0)
+  wait()
+end
+
+
+
+
+
+
+
+local Screen = GetPartFromPort(1, "Screen")
+Screen:ClearElements()
+
+local ammoIcon = Screen:CreateElement("ImageLabel", {
+  Position = UDim2.fromScale(0.8, 0.1);
+  Size = UDim2.fromScale(0.1, 0.1);
+})
+
+ammoIcon.Image = "rbxassetid://6011908706" 
+ammoIcon.BackgroundTransparency = 1
+ammoIcon.Rotation = 180
