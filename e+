@@ -4,7 +4,6 @@ Screen:ClearElements()
 
 local ammoFrame = Screen:CreateElement('Frame', {
   Position = UDim2.fromScale(0.8, 0.3);
-  BackgroundColor = BrickColor.new("Pastel Blue");
 })
 
 local ammoIcon = Screen:CreateElement("ImageLabel", {
