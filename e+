@@ -30,14 +30,114 @@ end
 
 
 
-local Screen = GetPartFromPort(1, "Screen")
-Screen:ClearElements()
+local SM = GetPartFromPort(1, "StarMap")
+local TL = GetPartFromPort(1, "Telescope")
 
-local ammoIcon = Screen:CreateElement("ImageLabel", {
-  Position = UDim2.fromScale(0.8, 0.1);
+
+
+
+
+
+
+
+
+
+
+
+
+local TS = GetPartFromPort(1, "TouchScreen")
+TS:ClearElements()
+  
+local BB = TS:CreateElement("TextButton", {
+  Position = UDim2.fromScale(0.1, 0.8);
   Size = UDim2.fromScale(0.1, 0.1);
+  Text = "Back";
+})
+  
+local NB = TS:CreateElement("TextButton", {
+  Position = UDim2.fromScale(0.8, 0.8);
+  Size = UDim2.fromScale(0.1, 0.1);
+  Text = "Next";
 })
 
-ammoIcon.Image = "rbxassetid://6011908706" 
-ammoIcon.BackgroundTransparency = 1
-ammoIcon.Rotation = 180
+BB.MouseButton1Click:Connect(function()
+  print("yay!")
+end)
+
+button.Position = UDim2.fromScale(0.25, 0.25)
+
+
+
+
+
+
+
+
+
+local TS = GetPartFromPort(1, "Telescope")
+local SM = GetPartFromPort(1, "StarMap")
+local SN = GetPartFromPort(1, "TouchScreen")
+
+function menu()
+  SN:ClearElements()
+  local text = SN:CreateElement("TextBox", {
+    Text = "MENU";
+    BackgroundTransparency = 1;
+    TextColor3 = Color3.new(255, 255, 255);
+    TextScaled = true;
+    Position = UDim2.fromScale(0.8, 0.3);
+    Size = UDim2.fromScale(0.6, 0.2);
+  })
+end
+
+menu()
+
+
+
+
+
+
+
+
+local TS = GetPartFromPort(1, "Telescope")
+local SM = GetPartFromPort(1, "StarMap")
+local SN = GetPartFromPort(1, "TouchScreen")
+
+function menu()
+  SN:ClearElements()
+  local text = SN:CreateElement("TextBox", {
+    Text = "MENU";
+    Position = UDim2.fromScale(0.2, 0.1);
+    Size = UDim2.fromScale(0.6, 0.2);
+    BackgroundTransparency = 1;
+    TextColor3 = Color3.fromRGB(255, 255, 255);
+    TextScaled = true;
+  })
+
+  local GB = SN:CreateElement("TextButton", {
+    Text = "Stars";
+    Position = UDim2.fromScale(0.3, 0.4);
+    Size = UDim2.fromScale(0.4, 0.2);
+    BackgroundColor3 = Color3.fromRGB(10, 0, 40);
+    TextColor3 = Color3.fromRGB(255, 255, 255);
+    TextScaled = true;
+  })
+
+  local SB = SN:CreateElement("TextButton", {
+    Text = "System";
+    Position = UDim2.fromScale(0.3, 0.7);
+    Size = UDim2.fromScale(0.4, 0.2);
+    BackgroundColor3 = Color3.fromRGB(10, 0, 40);
+    TextColor3 = Color3.fromRGB(255, 255, 255);
+    TextScaled = true;
+  })
+end
+
+function stars()
+  SN:ClearElements()
+  for i, v in SM:GetSystems() do
+    print(v[1])
+  end
+end
+
+stars()
