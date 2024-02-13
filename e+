@@ -136,7 +136,9 @@ end
 function stars()
   SN:ClearElements()
   for i, v in SM:GetSystems() do
-    print(v[1])
+    for x in string.gmatch(i, ",%S+") do
+      print(x)
+    end
   end
 end
 
