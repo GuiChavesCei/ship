@@ -98,7 +98,6 @@ menu()
 
 
 
-
 local TS = GetPartFromPort(1, "Telescope")
 local SM = GetPartFromPort(1, "StarMap")
 local SN = GetPartFromPort(1, "TouchScreen")
@@ -135,10 +134,13 @@ end
 
 function stars()
   SN:ClearElements()
+  local LocalCoords = 
   for i, v in SM:GetSystems() do
-    for x in string.gmatch(i, ",%S+") do
-      print(x)
+    local coords = {}
+    for x in string.gmatch(i, "-?".."%d+") do
+      table.insert(coords, tonumber(x))
     end
+    
   end
 end
 
